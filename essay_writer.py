@@ -124,8 +124,8 @@ class AdvancedEssayWriterGUI(QMainWindow):
         self.controls_layout = QHBoxLayout()
         self.thread_id_button = QPushButton("Set Thread ID")
         self.controls_layout.addWidget(self.thread_id_button)
-        self.navigate_button = QPushButton("Navigate to Thread")
-        self.controls_layout.addWidget(self.navigate_button)
+       # self.navigate_button = QPushButton("Navigate to Thread")
+      #  self.controls_layout.addWidget(self.navigate_button)
         self.revision_spinbox = QSpinBox()
         self.revision_spinbox.setRange(1, 10)
         self.revision_spinbox.setValue(2)
@@ -136,7 +136,7 @@ class AdvancedEssayWriterGUI(QMainWindow):
         # Button Connections
         self.generate_button.clicked.connect(self.start_workflow)
         self.thread_id_button.clicked.connect(self.set_thread_id)
-        self.navigate_button.clicked.connect(self.navigate_to_thread)
+       # self.navigate_button.clicked.connect(self.navigate_to_thread)
 
         # Initialize StateGraph
         self.graph = self.initialize_graph(AgentState)
@@ -174,15 +174,15 @@ class AdvancedEssayWriterGUI(QMainWindow):
         self.current_state_index = len(thread_history) - 1
         print("Saved state:", state)  # Debug output
 
-    def load_state(self, thread_id: str, index: int):
-        """Load a specific state by thread ID and index."""
-        if thread_id not in self.thread_states or index >= len(self.thread_states[thread_id]):
-            QMessageBox.warning(self, "Invalid State", "The requested state does not exist.")
-            return
-        self.current_thread_id = thread_id
-        state = self.thread_states[thread_id][index]
-        self.update_tabs(state)
-        self.test_update_tabs()
+    # def load_state(self, thread_id: str, index: int):
+    #     """Load a specific state by thread ID and index."""
+    #     if thread_id not in self.thread_states or index >= len(self.thread_states[thread_id]):
+    #         QMessageBox.warning(self, "Invalid State", "The requested state does not exist.")
+    #         return
+    #     self.current_thread_id = thread_id
+    #     state = self.thread_states[thread_id][index]
+    #     self.update_tabs(state)
+    #     self.test_update_tabs()
 
     def update_tabs(self, state: dict):
         """Update the tabs with the current state."""
@@ -225,17 +225,17 @@ class AdvancedEssayWriterGUI(QMainWindow):
     #     self.update_tabs(mock_state)
     #     print("heloooooooo")
 
-    def navigate_to_thread(self):
-        """Navigate to a specific thread ID and state index."""
-        thread_id, ok = QInputDialog.getText(self, "Navigate by Thread ID", "Enter the thread ID:")
-        if ok and thread_id:
-            if thread_id in self.thread_states:
-                index, ok = QInputDialog.getInt(self, "Select State", "Enter the state index:", 0, 0,
-                                                len(self.thread_states[thread_id]) - 1)
-                if ok:
-                    self.load_state(thread_id, index)
-            else:
-                QMessageBox.warning(self, "Invalid Thread ID", f"No states found for Thread ID: {thread_id}")
+    # def navigate_to_thread(self):
+    #     """Navigate to a specific thread ID and state index."""
+    #     thread_id, ok = QInputDialog.getText(self, "Navigate by Thread ID", "Enter the thread ID:")
+    #     if ok and thread_id:
+    #         if thread_id in self.thread_states:
+    #             index, ok = QInputDialog.getInt(self, "Select State", "Enter the state index:", 0, 0,
+    #                                             len(self.thread_states[thread_id]) - 1)
+    #             if ok:
+    #                 self.load_state(thread_id, index)
+    #         else:
+    #             QMessageBox.warning(self, "Invalid Thread ID", f"No states found for Thread ID: {thread_id}")
 
     def start_workflow(self):
         """Start the essay writing workflow in a separate thread."""
